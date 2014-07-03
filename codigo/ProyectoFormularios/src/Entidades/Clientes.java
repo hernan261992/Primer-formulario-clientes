@@ -11,6 +11,16 @@ public class Clientes {
     private String tipo;
     //declarar atributos
     private String telefono;
+    
+    private String fechaNac;
+    private String fechaIng;
+    private String sexo;
+    private String cargos;
+    private String afiliado;
+    private String estudios;
+    
+    
+    
 
     public String getCodigo() {
         return codigo;
@@ -50,5 +60,65 @@ public class Clientes {
 
     public void setTelefono(String telefono) {
         this.telefono = telefono;
+    }
+
+    
+    public String getFechaNac() {
+        return fechaNac;
+    }
+
+    
+    public void setFechaNac(String fechaNac) {
+        this.fechaNac = fechaNac;
+    }
+
+    
+    public String getFechaIng() {
+        return fechaIng;
+    }
+
+    
+    public void setFechaIng(String fechaIng) {
+        this.fechaIng = fechaIng;
+    }
+
+    
+    public String getSexo() {
+        return sexo;
+    }
+
+    
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    
+    public String getCargos() {
+        return cargos;
+    }
+
+   
+    public void setCargos(String cargos) {
+        this.cargos = cargos;
+    }
+
+    
+    public String getAfiliado() {
+        return afiliado;
+    }
+
+   
+    public void setAfiliado(String afiliado) {
+        this.afiliado = afiliado;
+    }
+
+    
+    public String getEstudios() {
+        return estudios;
+    }
+
+    
+    public void setEstudios(String estudios) {
+        this.estudios = estudios;
     }
 }
