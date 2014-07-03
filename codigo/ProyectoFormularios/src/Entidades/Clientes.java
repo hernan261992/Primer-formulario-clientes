@@ -11,7 +11,7 @@ public class Clientes {
     private String tipo;
     //declarar atributos
     private String telefono;
-    
+    private String direccion;
     private String fechaNac;
     private String fechaIng;
     private String sexo;
@@ -120,5 +120,19 @@ public class Clientes {
     
     public void setEstudios(String estudios) {
         this.estudios = estudios;
+    }
+
+    /**
+     * @return the direccion
+     */
+    public String getDireccion() {
+        return direccion;
+    }
+
+    /**
+     * @param direccion the direccion to set
+     */
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
     }
 }

@@ -6,7 +6,12 @@
 
 package Formularios;
 
+import Entidades.Acciones;
+import Entidades.Clientes;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,11 +22,59 @@ public class FormEmpleados extends javax.swing.JFrame {
     /**
      * Creates new form FormEmpleados
      */
+    
+    Acciones acciones = new Acciones();
+    //ArrayList<Clientes> lista = new ArrayList<Clientes>();
     public FormEmpleados() {//constructor
         initComponents();//evento de inicio
         JOptionPane.showMessageDialog
         (this, "Ingreso a Registro de Empleados");
     
+    }
+    
+    
+    void listarClientes(){
+        System.out.println("hERNAN");
+        ArrayList<Clientes> lista = acciones.listarTodos();
+        DefaultTableModel tabla = new DefaultTableModel();
+        tabla.setColumnCount(0);
+        tabla.setRowCount(lista.size());
+        tabla.addColumn("CODIGO");
+        tabla.addColumn("NOMBRES");
+        tabla.addColumn("APELLIDOS");
+        tabla.addColumn("DIRECCION");
+        tabla.addColumn("TELEFONO");
+        tabla.addColumn("FECHA NACIMIENTO");
+        tabla.addColumn("FECHA INGRESO");
+        tabla.addColumn("CARGO");
+        tabla.addColumn("SEXO");
+        tabla.addColumn("AFILIADO");
+        tabla.addColumn("ESTUDIO");
+        
+        Clientes objC = new Clientes();
+        Iterator it = lista.iterator();
+        Clientes cli = null;
+        int i=0;
+        
+         while (it.hasNext()) {
+            objC = (Clientes)it.next();
+             
+            tabla.setValueAt(objC.getCodigo(), i, 0);
+            tabla.setValueAt(objC.getNombres(), i, 1);
+            tabla.setValueAt(objC.getApellidos(), i, 2);
+            tabla.setValueAt(objC.getDireccion(), i, 3);
+            tabla.setValueAt(objC.getTelefono(), i, 4);
+            tabla.setValueAt(objC.getFechaNac(), i, 5);
+            tabla.setValueAt(objC.getFechaIng(), i, 6);
+            tabla.setValueAt(objC.getCargos(), i, 7);
+            tabla.setValueAt(objC.getSexo(), i, 8);
+            tabla.setValueAt(objC.getAfiliado(), i, 9);
+            tabla.setValueAt(objC.getEstudios(), i, 10);
+            i++;
+            }
+        
+        
+        jTable1.setModel(tabla);
     }
     
     /**
@@ -36,6 +89,8 @@ public class FormEmpleados extends javax.swing.JFrame {
         buttonGroup1 = new javax.swing.ButtonGroup();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,13 +99,13 @@ public class FormEmpleados extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
-        jTextField5 = new javax.swing.JTextField();
-        txtfechaNac = new javax.swing.JTextField();
-        txtfechaIng = new javax.swing.JTextField();
+        txtcodigo = new javax.swing.JTextField();
+        txtnombres = new javax.swing.JTextField();
+        txtapellidos = new javax.swing.JTextField();
+        txtdireccion = new javax.swing.JTextField();
+        txttelefono = new javax.swing.JTextField();
+        txtfechanac = new javax.swing.JTextField();
+        txtfechaing = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -59,10 +114,10 @@ public class FormEmpleados extends javax.swing.JFrame {
         jRadioButton1 = new javax.swing.JRadioButton();
         jRadioButton2 = new javax.swing.JRadioButton();
         jLabel11 = new javax.swing.JLabel();
-        jCheckBox1 = new javax.swing.JCheckBox();
-        jCheckBox2 = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
         jCheckBox3 = new javax.swing.JCheckBox();
+        jCheckBox4 = new javax.swing.JCheckBox();
+        jCheckBox5 = new javax.swing.JCheckBox();
         jLabel2 = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnGrabar = new javax.swing.JButton();
@@ -107,19 +162,19 @@ public class FormEmpleados extends javax.swing.JFrame {
 
         jLabel8.setText("Fecha Ing:");
 
-        jTextField1.setName("txtcodigo"); // NOI18N
+        txtcodigo.setName("txtcodigo"); // NOI18N
 
-        jTextField2.setName("txtnombre"); // NOI18N
+        txtnombres.setName("txtnombre"); // NOI18N
 
-        jTextField3.setName("txtapellido"); // NOI18N
+        txtapellidos.setName("txtapellido"); // NOI18N
 
-        jTextField4.setName("txtdireccion"); // NOI18N
+        txtdireccion.setName("txtdireccion"); // NOI18N
 
-        jTextField5.setName("txttelefono"); // NOI18N
+        txttelefono.setName("txttelefono"); // NOI18N
 
-        txtfechaNac.setName("txtfechaNac"); // NOI18N
+        txtfechanac.setName("txtfechanac"); // NOI18N
 
-        txtfechaIng.setName("txtfechaIng"); // NOI18N
+        txtfechaing.setName("txtfechaing"); // NOI18N
 
         jLabel9.setText("Cargos:");
 
@@ -139,19 +194,26 @@ public class FormEmpleados extends javax.swing.JFrame {
         buttonGroup1.add(jRadioButton1);
         jRadioButton1.setSelected(true);
         jRadioButton1.setText("Masculino");
+        jRadioButton1.setContentAreaFilled(false);
 
         buttonGroup1.add(jRadioButton2);
         jRadioButton2.setText("Femenino");
+        jRadioButton2.setContentAreaFilled(false);
+        jRadioButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jRadioButton2ActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Sexo:");
-
-        jCheckBox1.setText("AFP");
-
-        jCheckBox2.setText("ONP");
 
         jLabel12.setText("Afiliado:");
 
         jCheckBox3.setText("Seguro");
+
+        jCheckBox4.setText("AFP");
+
+        jCheckBox5.setText("ONP");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -161,25 +223,6 @@ public class FormEmpleados extends javax.swing.JFrame {
                 .addGap(29, 29, 29)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel6)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addGap(18, 18, 18)
-                                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel8)
-                                    .addComponent(jLabel7))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(txtfechaNac, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
-                                    .addComponent(txtfechaIng))))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,33 +230,58 @@ public class FormEmpleados extends javax.swing.JFrame {
                                     .addComponent(jLabel1))
                                 .addGap(18, 18, 18)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addGap(18, 18, 18)
-                                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)))
+                                .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel11, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel12)
+                                .addGap(6, 6, 6))))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(18, 18, 18)
+                                .addComponent(txttelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel7))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(txtfechanac, javax.swing.GroupLayout.DEFAULT_SIZE, 104, Short.MAX_VALUE)
+                                    .addComponent(txtfechaing))))
+                        .addGap(81, 209, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel10)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addComponent(jLabel11)
-                        .addComponent(jLabel9)
-                        .addComponent(jLabel10))
-                    .addComponent(jLabel12))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jRadioButton2))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jCheckBox1)
-                        .addGap(10, 10, 10)
-                        .addComponent(jCheckBox2)
-                        .addGap(10, 10, 10)
+                        .addGap(35, 35, 35)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jCheckBox4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jCheckBox5)
+                        .addGap(32, 32, 32)
                         .addComponent(jCheckBox3))
-                    .addComponent(jScrollPane1))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(jRadioButton1)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jRadioButton2))))
                 .addGap(26, 26, 26))
         );
         jPanel1Layout.setVerticalGroup(
@@ -221,7 +289,7 @@ public class FormEmpleados extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtcodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel9)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -230,15 +298,15 @@ public class FormEmpleados extends javax.swing.JFrame {
                         .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 14, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtnombres, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtapellidos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel5)
-                            .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtdireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -247,25 +315,25 @@ public class FormEmpleados extends javax.swing.JFrame {
                             .addComponent(jLabel11))
                         .addGap(9, 9, 9)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox1)
-                            .addComponent(jCheckBox2)
                             .addComponent(jLabel12)
-                            .addComponent(jCheckBox3))))
+                            .addComponent(jCheckBox3)
+                            .addComponent(jCheckBox4)
+                            .addComponent(jCheckBox5))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel6)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txttelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel10))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel7)
-                            .addComponent(txtfechaNac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtfechanac, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(txtfechaIng, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtfechaing, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
@@ -274,6 +342,11 @@ public class FormEmpleados extends javax.swing.JFrame {
 
         btnNuevo.setBackground(new java.awt.Color(255, 204, 204));
         btnNuevo.setText("Nuevo");
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
 
         btnGrabar.setBackground(new java.awt.Color(255, 204, 204));
         btnGrabar.setText("Grabar");
@@ -355,7 +428,7 @@ public class FormEmpleados extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -385,14 +458,124 @@ public class FormEmpleados extends javax.swing.JFrame {
 
     private void btnGrabarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGrabarActionPerformed
         // TODO add your handling code here:
+        Clientes clientes = new Clientes();
+        if(this.acciones.buscar(clientes)== null){
+            clientes.setCodigo(txtcodigo.getText());
+            clientes.setNombres(txtnombres.getText());
+            clientes.setApellidos(txtapellidos.getText());
+            clientes.setDireccion(txtdireccion.getText());
+            clientes.setTelefono(txttelefono.getText());
+            clientes.setFechaNac(txtfechanac.getText());
+            clientes.setFechaIng(txtfechaing.getText());
+            clientes.setCargos((String) jComboBox1.getSelectedItem());
+            if(jRadioButton1.isSelected()){
+                clientes.setSexo(jRadioButton1.getText());
+            }
+            if(jRadioButton2.isSelected()){
+                clientes.setSexo(jRadioButton2.getText());
+            }
+            
+            if(jCheckBox4.isSelected()){
+                clientes.setAfiliado(jCheckBox4.getText());
+            }
+            if(jCheckBox5.isSelected()){
+                clientes.setAfiliado(jCheckBox5.getText());
+            }
+            if(jCheckBox3.isSelected()){
+                clientes.setAfiliado(jCheckBox3.getText());
+            }
+            clientes.setEstudios(jTextArea1.getText());
+            
+             acciones.insertar(clientes);
+             listarClientes();
+             
+            
+        }
+        
+       
+        
+        
     }//GEN-LAST:event_btnGrabarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         // TODO add your handling code here:
+         Clientes clientes = new Clientes();
+        if(this.acciones.buscar(clientes)== null){
+            clientes.setCodigo(txtcodigo.getText());
+            clientes.setNombres(txtnombres.getText());
+            clientes.setApellidos(txtapellidos.getText());
+            clientes.setDireccion(txtdireccion.getText());
+            clientes.setTelefono(txttelefono.getText());
+            clientes.setFechaNac(txtfechanac.getText());
+            clientes.setFechaIng(txtfechaing.getText());
+            clientes.setCargos((String) jComboBox1.getSelectedItem());
+            if(jRadioButton1.isSelected()){
+                clientes.setSexo(jRadioButton1.getText());
+            }
+            if(jRadioButton2.isSelected()){
+                clientes.setSexo(jRadioButton2.getText());
+            }
+            
+            if(jCheckBox4.isSelected()){
+                clientes.setAfiliado(jCheckBox4.getText());
+            }
+            if(jCheckBox5.isSelected()){
+                clientes.setAfiliado(jCheckBox5.getText());
+            }
+            if(jCheckBox3.isSelected()){
+                clientes.setAfiliado(jCheckBox3.getText());
+            }
+            clientes.setEstudios(jTextArea1.getText());
+            
+             acciones.modificar(clientes);
+             listarClientes();
+             
+            
+        }
+        
+       
+        
+        
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+         Clientes clientes = new Clientes();
+        if(this.acciones.buscar(clientes)== null){
+            clientes.setCodigo(txtcodigo.getText());
+            clientes.setNombres(txtnombres.getText());
+            clientes.setApellidos(txtapellidos.getText());
+            clientes.setDireccion(txtdireccion.getText());
+            clientes.setTelefono(txttelefono.getText());
+            clientes.setFechaNac(txtfechanac.getText());
+            clientes.setFechaIng(txtfechaing.getText());
+            clientes.setCargos((String) jComboBox1.getSelectedItem());
+            if(jRadioButton1.isSelected()){
+                clientes.setSexo(jRadioButton1.getText());
+            }
+            if(jRadioButton2.isSelected()){
+                clientes.setSexo(jRadioButton2.getText());
+            }
+            
+            if(jCheckBox4.isSelected()){
+                clientes.setAfiliado(jCheckBox4.getText());
+            }
+            if(jCheckBox5.isSelected()){
+                clientes.setAfiliado(jCheckBox5.getText());
+            }
+            if(jCheckBox3.isSelected()){
+                clientes.setAfiliado(jCheckBox3.getText());
+            }
+            clientes.setEstudios(jTextArea1.getText());
+            
+             acciones.eliminar(clientes);
+             listarClientes();
+             
+            
+        }
+        
+       
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
@@ -403,6 +586,24 @@ public class FormEmpleados extends javax.swing.JFrame {
         FormEmpleados obj = new FormEmpleados();
         obj.setVisible(false);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+        // TODO add your handling code here:
+        txtcodigo.setText("");
+        txtnombres.setText("");
+        txtapellidos.setText("");
+        txtdireccion.setText("");
+        txttelefono.setText("");
+        txtfechaing.setText("");
+        txtfechanac.setText("");
+        jTextArea1.setText("");
+        
+        
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -447,9 +648,11 @@ public class FormEmpleados extends javax.swing.JFrame {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnSalir;
     private javax.swing.ButtonGroup buttonGroup1;
-    private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private javax.swing.JCheckBox jCheckBox3;
+    private javax.swing.JCheckBox jCheckBox4;
+    private javax.swing.JCheckBox jCheckBox5;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -472,12 +675,12 @@ public class FormEmpleados extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JTable jTable2;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField txtfechaIng;
-    private javax.swing.JTextField txtfechaNac;
+    private javax.swing.JTextField txtapellidos;
+    private javax.swing.JTextField txtcodigo;
+    private javax.swing.JTextField txtdireccion;
+    private javax.swing.JTextField txtfechaing;
+    private javax.swing.JTextField txtfechanac;
+    private javax.swing.JTextField txtnombres;
+    private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
 }

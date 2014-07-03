@@ -18,7 +18,8 @@ public class Acciones {
     
     public void insertar(Clientes cliente) {
         if (buscar(cliente) == null) {
-            lista.add(cliente);
+             lista.add(cliente);
+             System.out.println(lista.size());
         }
     }
     public void modificar(Clientes cliente) {
